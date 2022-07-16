@@ -247,7 +247,7 @@ int OWNext()
 // are no devices on the 1-Wire Net.
 //
 int OWSearch()
-	{
+{
 	char a[200];
 	int id_bit_number;
 	int last_zero, rom_byte_number, search_result;
