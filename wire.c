@@ -8,11 +8,8 @@
 #include "wire.h"
 
 
-
-
-// Search state   /////////////////////////////////////////////////////////////////!!!!!!!!!!!!!!!!/////////
 unsigned char ROM_NO[8]  = {0};
-BYTE OWID[2][8]  = {0};
+BYTE OWID[2][8] = {0};
 int LastDiscrepancy;
 int LastFamilyDiscrepancy;
 int LastDeviceFlag;
