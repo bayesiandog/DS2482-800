@@ -17,8 +17,6 @@ unsigned char crc8;
 
 extern DS2480Config DSconfig;
 
-
-
 // writeOneWireByte
 //
 // Writes a 1-Wire byte using I2C commands sent to the DS2482.
