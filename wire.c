@@ -114,8 +114,6 @@ BYTE OWDWriteConfig(DS2480Config *pDSconfig) {
 	while (OWBusy());
 	config = (pDSconfig->WS)<<3 | (pDSconfig->SPU)<<2 | (pDSconfig->APU);
 	config |= ~config<<4;
-	sprintf(hak, "%X\n", config);
-	CommSend(COMM_EXT, hak);
 
 	I2C_Write(OWDAddress, OWDConfig, 0, 1, &config);
 
