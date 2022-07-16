@@ -21,7 +21,7 @@
 #define	ConfigReg						(0xC3)
 
 // DS2480 commands
-#define OWDConfig                        (0xD2)
+#define OWDConfig                       (0xD2)
 
 // status register bit assesment
 #define STATUS_SBR	(0x20)
@@ -33,8 +33,7 @@
 
 #define OWOperation (0x69)
 
-typedef struct 
-{
+typedef struct {
     BYTE APU;
     BYTE SPU;
     BYTE WS;
