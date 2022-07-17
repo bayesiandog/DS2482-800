@@ -4,26 +4,26 @@
 
 #define OWDAddress						(0x30)
 
-// command opcodes
-#define	OWBitCommand					(0x87)
-#define	OWSetReadPtrCommand				(0xE1)
-#define OWReadByteCommand				(0x96)
-#define OWWriteByteCommand				(0xA5)
-#define OWResetCommand					(0xB4)
-#define OWDeviceResetCommand			(0xF0)
-#define OWTriplet						(0x78)
-
-
-// valid pointer codes for read register selection
+// Valid pointer codes for read register selection
 #define	StatReg							(0xF0)
 #define	DataReg							(0xE1)
 #define	ChanReg							(0xD2)
 #define	ConfigReg						(0xC3)
 
 // DS2480 commands
-#define OWDConfig                       (0xD2)
+#define OWDSConfig                      (0xD2)
+#define OWDSDeviceResetCommand	   		(0xF0)
+#define	OWDSSetReadPtrCommand			(0xE1)
+#define	OWDSChannelSelect				(0xC3)
+#define OWDSResetCommand				(0xB4)
+#define OWDSReadByteCommand				(0x96)
+#define OWDSTriplet						(0x78)
+#define OWDSWriteByteCommand			(0xA5)
 
-// status register bit assesment
+// 1-wire commands
+#define OWSearchCmd                     (0xF0)
+
+// Status register bit assesment
 #define STATUS_SBR	(0x20)
 #define STATUS_TSB	(0x40)
 #define STATUS_DIR	(0x80)
@@ -31,19 +31,20 @@
 #define STATUS_RST  (0x10)
 #define STATUS_PPD  (0x02)
 
+// I2C value for reading only
 #define OWOperation (0x69)
 
-typedef struct {
-    BYTE APU;
-    BYTE SPU;
-    BYTE WS;
+// DS2480 config structure
+typedef struct 
+{
+    BYTE APU; // Active pull up
+    BYTE SPU; // Strong pull up
+    BYTE WS;  // Wire speed
 } DS2480Config;
 
 
 
-// functions
-BYTE OWWriteBit(BYTE value);
-BYTE OWReadBit(void);
+// Functions
 BYTE OWWriteByte(BYTE wrByte);
 BYTE OWReadByte(BYTE rdByte);
 BYTE OWReset(void);
