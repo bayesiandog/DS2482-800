@@ -28,7 +28,7 @@ BYTE OWWriteByte(BYTE wrByte)
 	BYTE buff[1];
 
 	while (OWBusy());
-	I2C_Write(OWDAddress, OWWriteByteCommand, 0, 1, &wrByte);
+	I2C_Write(OWDAddress, OWDSWriteByteCommand, 0, 1, &wrByte);
 	do {
 		I2C_Read(OWDAddress, OWOperation, 0, 1, buff);
 	} while ((buff[0] & STATUS_BUSY)); // Wait for busy bit to clear, similar to OWBusy()
@@ -49,7 +49,7 @@ BYTE OWReadByte(BYTE readRegister)
 
 	while (OWBusy());
 
-	I2C_Write(OWDAddress, OWSetReadPtrCommand, 0, 1, &readRegister); // set pointer to read
+	I2C_Write(OWDAddress, OWDSSetReadPtrCommand, 0, 1, &readRegister); // set pointer to read
 	I2C_Read(OWDAddress, OWOperation, 0, 1, &result);
 
 	while (OWBusy());
@@ -69,7 +69,7 @@ BYTE OWReset(void)
 	BYTE reset;
 	BYTE status[1];	
 
-	I2C_Read(OWDAddress, OWResetCommand, 0, 1, status);	
+	I2C_Read(OWDAddress, OWDSResetCommand, 0, 1, status);	
 
 	do {
 		I2C_Read(OWDAddress, OWOperation, 0, 1, status);
@@ -97,7 +97,7 @@ BYTE OWDReset(void)
 	// checking if 1-Wire busy
 	while (OWBusy());
 
-	I2C_Read(OWDAddress, OWDeviceResetCommand, 0, 1, buff);
+	I2C_Read(OWDAddress, OWDSDeviceResetCommand, 0, 1, buff);
    	I2C_Read(OWDAddress, OWOperation, 0, 1, &status);
 
 	while (OWBusy());
@@ -113,7 +113,7 @@ BYTE OWDWriteConfig(DS2480Config *pDSconfig) {
 	config = (pDSconfig->WS)<<3 | (pDSconfig->SPU)<<2 | (pDSconfig->APU);
 	config |= ~config<<4;
 
-	I2C_Write(OWDAddress, OWDConfig, 0, 1, &config);
+	I2C_Write(OWDAddress, OWDSConfig, 0, 1, &config);
 
 	while (OWBusy());
 	return 1;
@@ -127,7 +127,7 @@ BYTE OWBusy(void)
 	BYTE status = StatReg;
 	BYTE buff;
 
-	I2C_Write(OWDAddress, OWSetReadPtrCommand, 0, 1, &status);		// set pointer to read	
+	I2C_Write(OWDAddress, OWDSSetReadPtrCommand, 0, 1, &status);		// set pointer to read	
 	I2C_Read(OWDAddress, OWOperation, 0, 1, &buff);						// read
 
 	return buff & (1<<0);
@@ -167,9 +167,9 @@ WORD DS18B20_readTemp(BYTE deviceNumber)
     OWWriteByte(0xBE); // Read Scratchpad
     hak[0] = DataReg;
     for (int i=0;i<9;i++) {
-        I2C_Write(OWDAddress, OWReadByteCommand, 0, 0, hak);
+        I2C_Write(OWDAddress, OWDSReadByteCommand, 0, 0, hak);
         Delay(10);	  	
-        I2C_Write(OWDAddress, OWSetReadPtrCommand, 0, 1, hak);		// set pointer to read
+        I2C_Write(OWDAddress, OWDSSetReadPtrCommand, 0, 1, hak);		// set pointer to read
         Delay(10);
         I2C_Read(OWDAddress, OWOperation, 0, 1, &ret[i]);
     }
@@ -269,7 +269,7 @@ int OWSearch()
             }
             
 		// issue the search command
-		OWWriteByte(0xF0);
+		OWWriteByte(OWSearchCmd);
 		
 		// loop to do the search
 		do
@@ -401,7 +401,7 @@ unsigned char DS2482_search_triplet(int search_direction)
 	// checking if 1-Wire busy
 	while (OWBusy());
     hak[0] = search_direction ? 0x80 : 0x00;
-	I2C_Write(OWDAddress, OWTriplet, 0, 1, hak);
+	I2C_Write(OWDAddress, OWDSTriplet, 0, 1, hak);
 	while (OWBusy());
 	status = OWReadByte(StatReg);
 	// return status byte
