@@ -184,7 +184,9 @@ WORD DS18B20_readTemp(BYTE deviceNumber)
 
 
 
-
+//--------------------------------------------------------------------------
+// Perform a search for all devices on the 1-Wire network  	  
+//
 int OWDeviceSearch() 
 {
     BYTE result;
@@ -257,17 +259,15 @@ int OWSearch()
 	// if the last call was not the last one
   
 	if (!LastDeviceFlag)
-		{ OWReset();
-			/*if (!OWReset())
-                {
+		{ 
+            if (!OWReset()) { // if reset fails
                 // reset the search
                 LastDiscrepancy = 0;
                 LastDeviceFlag = 0;
                 LastFamilyDiscrepancy = 0;
-                CommSend(COMM_EXT, "1-WIRE RESET ERROR\n");
                 return false;
             }
-            */
+            
 		// issue the search command
 		OWWriteByte(0xF0);
 		
@@ -306,9 +306,7 @@ int OWSearch()
 			else
 				{
 				if ((!id_bit) && (!cmp_id_bit)  && (search_direction == 0))
-					{
-                       // sprintf(a, "!!!!!!id_bit = %d, cmp_id_bit = %d, search_direction = %d, %d\n", id_bit, cmp_id_bit, search_direction, id_bit_number);
-                       // CommSend(COMM_EXT, a);
+					{                      
 					last_zero = id_bit_number;
 					// check for Last discrepancy in family
 					if (last_zero < 9)
@@ -332,9 +330,7 @@ int OWSearch()
 					rom_byte_number++;
 					rom_byte_mask = 1;
 					}
-				}
-               //  sprintf(a, " %d, %d, %d, %d\n", id_bit, cmp_id_bit, id_bit_number-1, search_direction);
-               //   CommSend(COMM_EXT, a); 
+				}            
 			}
 		while(rom_byte_number < 8); // loop until through all ROM bytes 0-7
 		// if the search was successful then
@@ -361,7 +357,7 @@ int OWSearch()
         int i,j;
     if (search_result) {
         for (i=0, j=7;i<8;i++, j--) {
-            OWID[iter][j] = ROM_NO[i];
+            OWID[iter][j] = ROM_NO[i]; // save ID ROM in 2D array OWID
         }     
         sprintf(a, "ID = %02X%02X%02X%02X%02X%02X%02X%02X\n", OWID[iter][0], OWID[iter][1], OWID[iter][2], OWID[iter][3], OWID[iter][4], OWID[iter][5], OWID[iter][6], OWID[iter][7]);
         CommSend(COMM_EXT, a);
@@ -404,7 +400,7 @@ unsigned char DS2482_search_triplet(int search_direction)
 
 	// checking if 1-Wire busy
 	while (OWBusy());
-        hak[0] = search_direction ? 0x80 : 0x00;
+    hak[0] = search_direction ? 0x80 : 0x00;
 	I2C_Write(OWDAddress, OWTriplet, 0, 1, hak);
 	while (OWBusy());
 	status = OWReadByte(StatReg);
