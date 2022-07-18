@@ -140,7 +140,7 @@ WORD DS18B20_readTemp(BYTE deviceNumber)
     WORD temp;
 
     while(!OWReset()); 
-    OWWriteByte(0x55); // Match ROM
+    OWWriteByte(OWMatchROMCmd); // Match ROM
    
     for (int i=7;i>=0;i--) {
         OWWriteByte(OWID[deviceNumber][i]);
@@ -152,11 +152,11 @@ WORD DS18B20_readTemp(BYTE deviceNumber)
     
     sprintf(hak, "conf=%x\n", OWReadByte(ConfigReg));
 
-    OWWriteByte(0x44); // Convert T
+    OWWriteByte(OWConvertTCmd); // Convert T
 
     Delay(1000); // Wait for measurement
     while(!OWReset());
-    OWWriteByte(0x55); // Match ROM
+    OWWriteByte(OWMatchROMCmd); // Match ROM
    
   
     for (int i=7;i>=0;i--) {
@@ -164,7 +164,7 @@ WORD DS18B20_readTemp(BYTE deviceNumber)
     }
 
 
-    OWWriteByte(0xBE); // Read Scratchpad
+    OWWriteByte(OWReadPad); // Read Scratchpad
     hak[0] = DataReg;
     for (int i=0;i<9;i++) {
         I2C_Write(OWDAddress, OWDSReadByteCommand, 0, 0, hak);
