@@ -2,6 +2,7 @@
  Communication driver for DS2482-800 working with DS18B20 sensors
  
  8-Channel 1-Wire Master - https://datasheets.maximintegrated.com/en/ds/DS2482-800.pdf
+ 
  1-Wire Digital Thermometer - https://datasheets.maximintegrated.com/en/ds/DS18B20.pdf
 
 Features:
