@@ -22,6 +22,9 @@
 
 // 1-wire commands
 #define OWSearchCmd                     (0xF0)
+#define OWMatchROMCmd                   (0x55)
+#define OWConvertTCmd                   (0x44)
+#define OWReadPad                       (0xBE)
 
 // Status register bit assesment
 #define STATUS_SBR	(0x20)
