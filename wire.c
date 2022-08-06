@@ -149,8 +149,6 @@ WORD DS18B20_readTemp(BYTE deviceNumber)
     DSconfig.SPU = 1;
     DSconfig.WS = 0;
     OWDWriteConfig(&DSconfig);
-    
-    sprintf(hak, "conf=%x\n", OWReadByte(ConfigReg));
 
     OWWriteByte(OWConvertTCmd); // Convert T
 
@@ -158,7 +156,6 @@ WORD DS18B20_readTemp(BYTE deviceNumber)
     while(!OWReset());
     OWWriteByte(OWMatchROMCmd); // Match ROM
    
-  
     for (int i=7;i>=0;i--) {
         OWWriteByte(OWID[deviceNumber][i]);
     }
@@ -182,8 +179,6 @@ WORD DS18B20_readTemp(BYTE deviceNumber)
 }
 
 
-
-
 //--------------------------------------------------------------------------
 // Perform a search for all devices on the 1-Wire network  	  
 //
@@ -194,7 +189,6 @@ int OWDeviceSearch()
     if (OWFirst()==1)
         while(OWNext()==1);
 }
-
 
 
 //--------------------------------------------------------------------------
@@ -243,7 +237,7 @@ int OWNext()
 //
 int OWSearch()
 {
-	char a[200];
+	char buf[200];
 	int id_bit_number;
 	int last_zero, rom_byte_number, search_result;
 	int id_bit, cmp_id_bit;
@@ -359,8 +353,8 @@ int OWSearch()
         for (i=0, j=7;i<8;i++, j--) {
             OWID[iter][j] = ROM_NO[i]; // save ID ROM in 2D array OWID
         }     
-        sprintf(a, "ID = %02X%02X%02X%02X%02X%02X%02X%02X\n", OWID[iter][0], OWID[iter][1], OWID[iter][2], OWID[iter][3], OWID[iter][4], OWID[iter][5], OWID[iter][6], OWID[iter][7]);
-        CommSend(COMM_EXT, a);
+        sprintf(buf, "ID = %02X%02X%02X%02X%02X%02X%02X%02X\n", OWID[iter][0], OWID[iter][1], OWID[iter][2], OWID[iter][3], OWID[iter][4], OWID[iter][5], OWID[iter][6], OWID[iter][7]);
+        CommSend(COMM_EXT, buf);
 
         ++iter;
         if (LastDeviceFlag) {
