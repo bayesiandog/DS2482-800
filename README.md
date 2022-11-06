@@ -13,7 +13,7 @@ Features:
  
  Read Temperature - read temperature from individual or all 1-wire devices.
  
-Channel select feature to be added shortly.
+//Channel select feature to be added shortly.
 
 
 I2C procedures included in this driver are platform specific and you may have to make small changes to suit your own I2C hardware.
