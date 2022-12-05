@@ -5,7 +5,7 @@
  
  1-Wire Digital Thermometer - https://datasheets.maximintegrated.com/en/ds/DS18B20.pdf
 
-Features:
+## Features:
 
  Parasitic Power Supply for all 1-wire devices online. 
  
@@ -15,7 +15,7 @@ Features:
  
 //Channel select feature to be added shortly.
 
-
+## I2C
 I2C procedures included in this driver are platform specific and you may have to make small changes to suit your own I2C hardware.
 I2C communication examples are included in the chip's datasheet like below.
 
