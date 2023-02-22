@@ -38,8 +38,7 @@
 #define OWOperation (0x69)
 
 // DS2480 config structure
-typedef struct 
-{
+typedef struct {
     BYTE APU; // Active pull up
     BYTE SPU; // Strong pull up
     BYTE WS;  // Wire speed
