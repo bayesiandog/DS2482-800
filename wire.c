@@ -305,7 +305,7 @@ int OWSearch()
 					last_zero = id_bit_number;
 					// check for Last discrepancy in family
 					if (last_zero < 9)
-					LastFamilyDiscrepancy = last_zero;
+						LastFamilyDiscrepancy = last_zero;
 					}
 				// set or clear the bit in the ROM byte rom_byte_number
 				// with mask rom_byte_mask
