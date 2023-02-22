@@ -9,11 +9,12 @@
 
 
 unsigned char ROM_NO[8]  = {0};
-BYTE OWID[2][8] = {0};
+unsigned char OWID[2][8] = {0};
+unsigned char crc8;
 int LastDiscrepancy;
 int LastFamilyDiscrepancy;
 int LastDeviceFlag;
-unsigned char crc8;
+
 
 extern DS2480Config DSconfig;
 
