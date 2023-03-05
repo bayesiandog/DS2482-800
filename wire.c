@@ -108,7 +108,7 @@ BYTE OWDReset(void)
 
 BYTE OWDWriteConfig(DS2480Config *pDSconfig) {
   	BYTE config;
-	char hak[10];
+
 	// checking if 1-Wire busy
 	while (OWBusy());
 	config = (pDSconfig->WS)<<3 | (pDSconfig->SPU)<<2 | (pDSconfig->APU);
