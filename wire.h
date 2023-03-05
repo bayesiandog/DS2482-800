@@ -34,6 +34,8 @@
 #define STATUS_RST  (0x10)
 #define STATUS_PPD  (0x02)
 
+typedef uint8_t BYTE;
+
 // I2C value for reading only
 #define OWOperation (0x69)
 
